@@ -11,6 +11,7 @@
 		7371CEE827EF6DFF008BED67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371CEE727EF6DFF008BED67 /* ContentView.swift */; };
 		7371CEEA27EF6E01008BED67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7371CEE927EF6E01008BED67 /* Assets.xcassets */; };
 		7371CEED27EF6E01008BED67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7371CEEC27EF6E01008BED67 /* Preview Assets.xcassets */; };
+		7371CEF427EF6EF2008BED67 /* MicrophoneMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371CEF327EF6EF2008BED67 /* MicrophoneMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		7371CEE727EF6DFF008BED67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7371CEE927EF6E01008BED67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7371CEEC27EF6E01008BED67 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7371CEF327EF6EF2008BED67 /* MicrophoneMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				7371CEE727EF6DFF008BED67 /* ContentView.swift */,
 				7371CEE927EF6E01008BED67 /* Assets.xcassets */,
 				7371CEEB27EF6E01008BED67 /* Preview Content */,
+				7371CEF327EF6EF2008BED67 /* MicrophoneMonitor.swift */,
 			);
 			path = BoogVisualizer;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			files = (
 				7371CEE827EF6DFF008BED67 /* ContentView.swift in Sources */,
 				7371CEE627EF6DFF008BED67 /* BoogVisualizerApp.swift in Sources */,
+				7371CEF427EF6EF2008BED67 /* MicrophoneMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +276,7 @@
 				DEVELOPMENT_TEAM = UANK6U69V6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Want to determine your voice waves";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,6 +307,7 @@
 				DEVELOPMENT_TEAM = UANK6U69V6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Want to determine your voice waves";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
