@@ -57,15 +57,15 @@ class MicrophoneMonitor: ObservableObject {
         }
     }
     
-    // called as soon as object is initialized
+    // called in init
     private func startMonitoring() {
         
-        // metering was disabled by default, we enable it track the sound level
+        // metering was disabled by default, we enable it to track the sound level
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         
         // set time interval to lower value for higher def/more bars in the visualization
-        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { (timer) in
             
             // refresh average and peak values for all channels of the recorder
             self.audioRecorder.updateMeters()

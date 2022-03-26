@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let numberOfSamples: Int = 10
+let numberOfSamples: Int = 40
 
 struct ContentView: View {
     @ObservedObject private var mic = MicrophoneMonitor(numberOfSamples: numberOfSamples)
@@ -15,18 +15,27 @@ struct ContentView: View {
     private func normalizeSoundLevel(level: Float) -> CGFloat {
         let level = max(0.2, CGFloat(level) + 50) / 2 // between 0.1 and 25
         
-        return CGFloat(level * (250 / 25)) // scaled to max at 250 (height of our bar)
+        return CGFloat(level * (250 / 25)) // bar: 250 max height
     }
     
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack {
-                HStack(spacing: 4) {
+                HStack(spacing: 5) {
                     ForEach(mic.soundSamples, id: \.self) { level in
                         BarView(value: self.normalizeSoundLevel(level: level))
                     }
                 }
+
+            }
+            Button {
+                print("REC button pressed")
+            } label: {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 100, height: 100)
+                    .position(x: 195, y: 650)
             }
         }
     }
@@ -43,9 +52,11 @@ struct BarView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: 5)
                 .fill(.white)
-                .frame(width: (UIScreen.main.bounds.width - CGFloat(numberOfSamples) * 4) / CGFloat(numberOfSamples), height: value)
+                .frame(
+                    width: CGFloat(2), height: value
+                )
         }
     }
 }
