@@ -86,6 +86,8 @@
 			dependencies = (
 			);
 			name = BoogVisualizer;
+			packageProductDependencies = (
+			);
 			productName = BoogVisualizer;
 			productReference = 7371CEE227EF6DFF008BED67 /* BoogVisualizer.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +116,8 @@
 				Base,
 			);
 			mainGroup = 7371CED927EF6DFF008BED67;
+			packageReferences = (
+			);
 			productRefGroup = 7371CEE327EF6DFF008BED67 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
