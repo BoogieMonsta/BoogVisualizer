@@ -12,7 +12,8 @@ let numberOfSamples: Int = 85
 struct ContentView: View {
     
     @State private var sampleStartCursor: Double = 21
-    @State private var sampleEndCursor: Double = 12
+    @State private var sampleEndCursor: Double = 10
+    @State private var isBeforeStartCursor: Bool = false
     
     @ObservedObject private var mic = MicrophoneMonitor(numberOfSamples: numberOfSamples)
     
@@ -30,7 +31,7 @@ struct ContentView: View {
             VStack {
                 HStack(spacing: 5) {
                     ForEach(mic.soundSamples, id: \.self) { level in
-                        BarView(value: self.normalizeSoundLevel(level: level))
+                        BarView(value: self.normalizeSoundLevel(level: level), barColor: isBeforeStartCursor ? Color.gray : Color.white)
                     }
                 }
             }.position(x: 330, y: 100)
@@ -45,33 +46,63 @@ struct ContentView: View {
                     .position(x: 705, y: 100)
             }
             
+            // PLAY button
+            Button {
+                print("PLAY button pressed")
+            } label: {
+                Triangle()
+                    .fill(Color.green)
+                    .frame(width: 55, height: 50)
+                    .rotationEffect(Angle(degrees: 90))
+                    .position(x: 705, y: 275)
+            }
+            
             // Sample start slider
-            Slider(value: $sampleStartCursor, in: 0...100)
-                .frame(width: 597, height: 10)
-                .position(x: 330, y: 240)
-            Text("Sample Start")
-                .colorInvert()
-                .position(x: 95, y: 210)
-            // cursor
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 3, height: 200)
-                .position(x: (sampleStartCursor/100)*597+32, y: 95)
+            Group {
+                Slider(value: $sampleStartCursor, in: 0...100)
+                    .frame(width: 597, height: 10)
+                    .position(x: 330, y: 240)
+                Text("Sample Start")
+                    .colorInvert()
+                    .position(x: 82, y: 210)
+                // beginning muted
+                Rectangle()
+                    .fill(Color.black)
+                    .frame(width: (sampleStartCursor/100)*597+32, height: 150)
+                    .position(x: ((sampleStartCursor/100)*597+32)/2, y: 100)
+                    .opacity(0.8)
+                // cursor
+                Rectangle()
+                    .fill(Color.blue)
+                    .frame(width: 3, height: 200)
+                    .position(x: (sampleStartCursor/100)*597+32, y: 95)
+            }
+            
+           
             
             // Sample end slider
-            Slider(value: $sampleEndCursor, in: 0...100)
-                .frame(width: 597, height: 10)
-                .rotationEffect(Angle(degrees: 180))
-                .position(x: 330, y: 305)
-            Text("Sample End")
-                .colorInvert()
-                .position(x: 580, y: 275)
-            //cursor
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 3, height: 250)
-                .position(x: (sampleEndCursor/100)*597+149, y: 298)
-                .rotationEffect(Angle(degrees: 180))
+            Group {
+                Slider(value: $sampleEndCursor, in: 0...100)
+                    .frame(width: 597, height: 10)
+                    .rotationEffect(Angle(degrees: 180))
+                    .position(x: 330, y: 305)
+                Text("Sample End")
+                    .colorInvert()
+                    .position(x: 580, y: 275)
+                // ending muted
+                Rectangle()
+                    .fill(Color.black)
+                    .frame(width: (sampleEndCursor/100)*597, height: 165)
+                    .position(x: ((sampleEndCursor/100)*597)/2+148, y: 265)
+                    .rotationEffect(Angle(degrees: 180))
+                    .opacity(0.8)
+                //cursor
+                Rectangle()
+                    .fill(Color.blue)
+                    .frame(width: 3, height: 250)
+                    .position(x: (sampleEndCursor/100)*597+149, y: 298)
+                    .rotationEffect(Angle(degrees: 180))
+            }
                 
         }
     }
@@ -91,14 +122,28 @@ struct ContentView_Previews: PreviewProvider {
 
 struct BarView: View {
     var value: CGFloat
+    var barColor: Color
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
-                .fill(.white)
+                .fill(barColor)
                 .frame(
                     width: CGFloat(2), height: value
                 )
         }
+    }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+
+        return path
     }
 }
