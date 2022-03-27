@@ -13,7 +13,6 @@ struct ContentView: View {
     
     @State private var sampleStartCursor: Double = 21
     @State private var sampleEndCursor: Double = 10
-    @State private var isBeforeStartCursor: Bool = false
     
     @ObservedObject private var mic = MicrophoneMonitor(numberOfSamples: numberOfSamples)
     
@@ -31,7 +30,7 @@ struct ContentView: View {
             VStack {
                 HStack(spacing: 5) {
                     ForEach(mic.soundSamples, id: \.self) { level in
-                        BarView(value: self.normalizeSoundLevel(level: level), barColor: isBeforeStartCursor ? Color.gray : Color.white)
+                        BarView(value: self.normalizeSoundLevel(level: level))
                     }
                 }
             }.position(x: 330, y: 100)
@@ -43,7 +42,17 @@ struct ContentView: View {
                 Circle()
                     .fill(Color.red)
                     .frame(width: 50, height: 50)
-                    .position(x: 705, y: 100)
+                    .position(x: 705, y: 80)
+            }
+            
+            // STOP button
+            Button {
+                print("STOP button pressed")
+            } label: {
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 47, height: 47)
+                    .position(x: 705, y: 185)
             }
             
             // PLAY button
@@ -54,17 +63,18 @@ struct ContentView: View {
                     .fill(Color.green)
                     .frame(width: 55, height: 50)
                     .rotationEffect(Angle(degrees: 90))
-                    .position(x: 705, y: 275)
+                    .position(x: 705, y: 295)
             }
             
             // Sample start slider
             Group {
-                Slider(value: $sampleStartCursor, in: 0...100)
+                let sliderMaxValue: Double = 99 - sampleEndCursor
+                Slider(value: $sampleStartCursor, in: 0...sliderMaxValue)
                     .frame(width: 597, height: 10)
                     .position(x: 330, y: 240)
-                Text("Sample Start")
+                Text("TRIM START")
                     .colorInvert()
-                    .position(x: 82, y: 210)
+                    .position(x: 80, y: 210)
                 // beginning muted
                 Rectangle()
                     .fill(Color.black)
@@ -82,13 +92,14 @@ struct ContentView: View {
             
             // Sample end slider
             Group {
-                Slider(value: $sampleEndCursor, in: 0...100)
+                let sliderMinValue: Double = 99 - sampleStartCursor
+                Slider(value: $sampleEndCursor, in: 0...sliderMinValue)
                     .frame(width: 597, height: 10)
                     .rotationEffect(Angle(degrees: 180))
                     .position(x: 330, y: 305)
-                Text("Sample End")
+                Text("TRIM END")
                     .colorInvert()
-                    .position(x: 580, y: 275)
+                    .position(x: 590, y: 335)
                 // ending muted
                 Rectangle()
                     .fill(Color.black)
@@ -114,7 +125,7 @@ struct ContentView_Previews: PreviewProvider {
             ContentView()
                 .previewInterfaceOrientation(.landscapeLeft)
         } else {
-            // Fallback on earlier versions
+            // TODO: Fallback on earlier versions
         }
             
     }
@@ -122,12 +133,11 @@ struct ContentView_Previews: PreviewProvider {
 
 struct BarView: View {
     var value: CGFloat
-    var barColor: Color
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
-                .fill(barColor)
+                .fill(Color.white)
                 .frame(
                     width: CGFloat(2), height: value
                 )
