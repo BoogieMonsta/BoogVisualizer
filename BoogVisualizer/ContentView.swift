@@ -35,40 +35,50 @@ struct ContentView: View {
                 }
             }.position(x: 330, y: 100)
             
-            // REC button
-            Button {
-                print("REC button pressed")
-            } label: {
+            ZStack {
+                // REC button
+                Button {
+                    print("REC button pressed")
+                } label: {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 50, height: 50)
+                        .position(x: 705, y: 80)
+                }
+                
+                // STOP/SAVE button
+                Button {
+                    print("STOP button pressed")
+                } label: {
+                    RoundedRectangle(cornerRadius: 5)
+                        .fill(Color.white)
+                        .frame(width: 47, height: 47)
+                        .position(x: 705, y: 185)
+                }
                 Circle()
-                    .fill(Color.red)
-                    .frame(width: 50, height: 50)
-                    .position(x: 705, y: 80)
-            }
-            
-            // STOP button
-            Button {
-                print("STOP button pressed")
-            } label: {
-                Rectangle()
                     .fill(Color.white)
-                    .frame(width: 47, height: 47)
+                    .frame(width: 42, height: 42)
                     .position(x: 705, y: 185)
-            }
-            
-            // PLAY button
-            Button {
-                print("PLAY button pressed")
-            } label: {
-                Triangle()
-                    .fill(Color.green)
-                    .frame(width: 55, height: 50)
-                    .rotationEffect(Angle(degrees: 90))
-                    .position(x: 705, y: 295)
+                Text("S")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .position(x: 705, y: 185)
+                
+                // PLAY button
+                Button {
+                    print("PLAY button pressed")
+                } label: {
+                    Triangle()
+                        .fill(Color.green)
+                        .frame(width: 55, height: 50)
+                        .rotationEffect(Angle(degrees: 90))
+                        .position(x: 705, y: 295)
+                }
             }
             
             // Sample start slider
             Group {
-                let sliderMaxValue: Double = 99 - sampleEndCursor
+                let sliderMaxValue: Double = 99
                 Slider(value: $sampleStartCursor, in: 0...sliderMaxValue)
                     .frame(width: 597, height: 10)
                     .position(x: 330, y: 240)
@@ -92,7 +102,7 @@ struct ContentView: View {
             
             // Sample end slider
             Group {
-                let sliderMinValue: Double = 99 - sampleStartCursor
+                let sliderMinValue: Double = 99
                 Slider(value: $sampleEndCursor, in: 0...sliderMinValue)
                     .frame(width: 597, height: 10)
                     .rotationEffect(Angle(degrees: 180))
